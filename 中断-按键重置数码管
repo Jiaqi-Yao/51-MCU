@@ -1,0 +1,49 @@
+#include <reg52.h>
+
+sbit D1 = P2^0;
+sbit K3 = P3^2;
+sbit beeper = P2^5;
+sbit A0 = P2^2;
+sbit A1 = P2^3;
+sbit A2 = P2^4;
+unsigned char code table[] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};
+int i = 0;
+unsigned int x,y,z;
+
+void delay(unsigned int y)
+{
+	for(x=y;x;x--)
+		for(z=200;z;z--);
+}
+
+void main()
+{	
+	EA = 1;
+	EX0 = 1;
+	IT0 = 1;
+	A0 = 0;
+	A1 = 0;
+	A2 = 0;
+	while(1)
+	{	
+		
+		for(i=0;i<10;i++)
+		{
+			P0 = table[i];
+			delay(100);
+		}
+		
+	}	
+}
+
+void int0() interrupt 0
+{
+	
+		
+		
+		
+			i = 10;
+			
+		
+		
+}
