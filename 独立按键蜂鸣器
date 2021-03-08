@@ -1,0 +1,38 @@
+#include <reg52.h>
+
+sbit D1 = P2^0;
+sbit K1 = P3^1;
+sbit beeper = P2^5;
+
+void delay(unsigned int z)
+{
+	while(z--);
+}
+
+void beep()
+{
+	beeper = ~beeper;
+	delay(10);
+}
+
+void key()
+{
+	if(K1 == 0)
+	{
+		delay(1000);
+		if(K1 == 0)
+		{
+			beep();
+		}
+		//while(!K1);
+	}	
+}
+
+
+void main()
+{
+	while(1)
+	{	
+		key();
+	}	
+}
