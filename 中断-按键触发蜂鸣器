@@ -64,3 +64,4 @@ void int0() interrupt 0
 		delay2(1);
 	}
 }
+*/
