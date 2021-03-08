@@ -47,3 +47,20 @@ void int0() interrupt 0
 	beeper = ~beeper;
 	delay2(1);
 }
+
+/*另一种写法(外部中断0控制位IT0=1，跳变沿触发)
+void main()
+{
+	...
+	IT0 = 1;
+	...
+}
+
+void int0() interrupt 0
+{
+	while(K3 == 0)
+	{	
+		beeper = ~beeper;
+		delay2(1);
+	}
+}
