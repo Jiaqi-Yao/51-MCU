@@ -1,0 +1,63 @@
+#include <reg52.h>
+
+sbit D1 = P2^0;
+sbit K3 = P3^2;
+sbit beeper = P2^5;
+sbit A0 = P2^2;
+sbit A1 = P2^3;
+sbit A2 = P2^4;
+unsigned char code table[] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};
+int i = 0;
+unsigned int j,x,y,z,m,n,o;
+
+void delay(unsigned int y)
+{
+	for(x=y;x;x--)
+		for(z=200;z;z--);
+}
+
+void delay2(unsigned int n)
+{
+	for(m=n;m;m--)
+		for(o=200;o;o--);
+}
+
+void main()
+{	
+	TMOD = 0x01; //GATE = 0, C/T = 0; M1M0 = 0;
+	TH0 = (65536 - 50000) / 256; //定时器计数时间 = 65536 - N; N为定时器初始值; 值变化一次对应1微秒
+	TL0 = (65536 - 50000) % 256;
+	EA = 1;
+	ET0 = 1;
+	TR0 = 1; //开始计数
+	A0 = 0;
+	A1 = 0;
+	A2 = 0;
+	P0 = table[0];
+	while(1)
+	{	
+		
+		if(j == 20)
+		{
+			j = 0;
+			if(i < 9)
+			{
+				i = i + 1;
+				
+			}
+			else
+			{
+				i = 0;
+			}
+			P0 = table[i];
+		}
+		
+	}	
+}
+
+void timer() interrupt 1
+{
+	TH0 = (65536 - 50000) / 256;
+	TL0 = (65536 - 50000) % 256;
+	j = j + 1;
+}
